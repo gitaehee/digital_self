@@ -9,11 +9,26 @@ const PaymentPage = () => {
   const amount = 100; // 결제 금액 예시
 
   return (
-    <div>
+    <div className="page-container">
       <h1>결제 QR 코드 생성</h1>
-      <QRPayment payeeAddress={payeeAddress} tokenAddress={tokenAddress} amount={amount} />
+      <div className="qr">
+        <QRPayment payeeAddress={payeeAddress} tokenAddress={tokenAddress} amount={amount} />
+      </div>
     </div>
   );
 };
 
 export default PaymentPage;
+
+const styles = {
+  container: {
+    padding: "2rem",
+    maxWidth: "600px",
+    margin: "0 auto",
+    fontFamily: "sans-serif",
+  },
+  title: {
+    fontSize: "2rem",
+    marginBottom: "1.5rem",
+  },
+};

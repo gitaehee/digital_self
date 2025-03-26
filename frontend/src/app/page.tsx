@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useWallet } from "@/hooks/useWallet";
 import PaymentScanner from "@/components/PaymentScanner";
 
+
 const contractAddress = "0xDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF"; // 실제 또는 더미 주소
 
 export default function Home() {
@@ -30,27 +31,61 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className="page-container">
       <h1>홈페이지</h1>
-
       {!address ? (
         <>
           <button onClick={handleConnect} disabled={connecting}>
             {connecting ? "지갑 연결 중..." : "지갑 연결"}
           </button>
-          {error && <p style={{ color: "salmon" }}>{error}</p>}
+          {error && <p className="warning">{error}</p>}
         </>
       ) : (
-        <p> 지갑 주소: {address}</p>
+        <p className="address">🪙 지갑 주소: {address}</p>
       )}
 
       {provider ? (
-        <div style={{ marginTop: "1rem" }}>
+        <div className="qr">
           <PaymentScanner provider={provider} contractAddress={contractAddress} />
         </div>
       ) : (
-        <p>⚠️ 지갑을 연결하면 QR 스캐너가 활성화됩니다.</p>
+        <p className="warning">지갑을 연결하면 QR 스캐너가 활성화됩니다.</p>
       )}
     </div>
   );
 }
+
+const styles = {
+  container: {
+    padding: "2rem",
+    maxWidth: "600px",
+    margin: "0 auto",
+    fontFamily: "sans-serif",
+  },
+  title: {
+    fontSize: "2rem",
+    marginBottom: "1.5rem",
+  },
+  button: {
+    padding: "0.75rem 1.5rem",
+    fontSize: "1rem",
+    backgroundColor: "#4f46e5",
+    color: "white",
+    border: "none",
+    borderRadius: "0.5rem",
+    cursor: "pointer",
+    marginBottom: "1rem",
+  },
+  error: {
+    color: "salmon",
+    marginTop: "0.5rem",
+  },
+  address: {
+    fontWeight: "bold",
+    marginTop: "1rem",
+  },
+  warning: {
+    marginTop: "2rem",
+    color: "#f59e0b",
+  },
+};
