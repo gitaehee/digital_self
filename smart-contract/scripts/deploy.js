@@ -1,3 +1,5 @@
+//smart-contract/scripts/deploy.js
+
 async function main() {
     const QRPayment = await ethers.getContractFactory("QRPayment");
     const qrPayment = await QRPayment.deploy();

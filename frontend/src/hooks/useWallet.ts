@@ -1,3 +1,5 @@
+//frontend/src/hooks/useWallet.ts
+
 import { useState, useEffect } from 'react';
 import Web3Modal from 'web3modal';
 import { ethers } from 'ethers';

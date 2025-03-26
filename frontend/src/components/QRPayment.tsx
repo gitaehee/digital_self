@@ -1,3 +1,5 @@
+//frontend/src/components/QRPayment.tsx
+
 import { FC } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 

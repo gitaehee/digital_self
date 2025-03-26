@@ -1,10 +1,12 @@
+//frontend/src/app/scan/page.tsx
+
 "use client";
 import { useWallet } from "@/hooks/useWallet";
 import PaymentScanner from "@/components/PaymentScanner";
 
 const ScanPage = () => {
   const { provider } = useWallet();
-  const contractAddress = "0x배포된스마트컨트랙트주소";
+  const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
   return (
     <div>
