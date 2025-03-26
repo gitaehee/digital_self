@@ -1,3 +1,5 @@
+// app/page.tsx
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -25,7 +27,7 @@ export default function Home() {
   // 🔥 거래 내역 초기 생성 + 잔액 계산
   useEffect(() => {
     const existing = localStorage.getItem("transactions");
-
+  
     if (MOCK_MODE && !existing) {
       const mockTxs: Transaction[] = [
         {
@@ -45,15 +47,19 @@ export default function Home() {
       ];
       localStorage.setItem("transactions", JSON.stringify(mockTxs));
     }
-
+  
     const stored = localStorage.getItem("transactions");
     if (stored) {
       const parsed = JSON.parse(stored) as Transaction[];
       setTransactions(parsed.slice(-3).reverse());
-      const spent = parsed.reduce((sum, tx) => sum + tx.amount, 0);
-      setBalance(Math.max(0, MOCK_INITIAL_BALANCE - spent));
     }
+  
+    // ✅ 잔액은 항상 2.0으로 고정
+    const fixed = 2.0;
+    setBalance(fixed);
+    localStorage.setItem("mockBalance", fixed.toString());
   }, []);
+  
 
   const handleConnect = async () => {
     setConnecting(true);
@@ -121,9 +127,13 @@ export default function Home() {
           </div>
         </div>
       )}
+      
+
     </div>
   );
 }
+
+
 
 const styles = {
   txItem: {

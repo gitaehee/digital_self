@@ -93,3 +93,46 @@ button:disabled {
   margin-top: 1rem;
   text-align: center;
 }
+
+/* ✅ 모바일 반응형 개선 */
+/* 기존 내용은 그대로 두고 아래 추가 */
+
+@media screen and (max-width: 768px) {
+  .page-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+
+  button {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+
+  input {
+    width: 100% !important;
+  }
+
+  .qr img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .address {
+    font-size: 0.9rem;
+    word-break: break-word;
+  }
+}
