@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ethers } from 'ethers';
 import { QrReader } from 'react-qr-reader';
+import { useRouter } from 'next/navigation';
 
 interface PaymentScannerProps {
   provider: ethers.BrowserProvider;
@@ -8,6 +9,7 @@ interface PaymentScannerProps {
 }
 
 const PaymentScanner = ({ provider, contractAddress }: PaymentScannerProps) => {
+  const router = useRouter();
   const [scanResult, setScanResult] = useState('');
   const [paymentInfo, setPaymentInfo] = useState<any>(null);
   const [status, setStatus] = useState<string | null>(null);
@@ -23,6 +25,25 @@ const PaymentScanner = ({ provider, contractAddress }: PaymentScannerProps) => {
         setStatus("❌ 잘못된 QR 코드입니다.");
       }
     }
+  };
+
+  const handleApprove = async () => {
+    // 실제 결제 로직 (혹은 mock 결제 처리)
+    // ✅ 이곳에 localStorage 저장 + 이동 로직 들어감
+
+    // 예시: 스캔된 데이터를 기반으로 저장
+    const newTx = {
+      id: crypto.randomUUID(),
+      amount: 1.23, // QR로 받은 값
+      to: "0xAbC123...",
+      status: "성공",
+      timestamp: new Date().toISOString(),
+    };
+
+    const prev = JSON.parse(localStorage.getItem("transactions") || "[]");
+    localStorage.setItem("transactions", JSON.stringify([...prev, newTx]));
+
+    router.push("/success");
   };
 
   const handlePayment = async () => {
@@ -57,6 +78,8 @@ const PaymentScanner = ({ provider, contractAddress }: PaymentScannerProps) => {
 
     setIsLoading(false);
   };
+
+  
 
   return (
     <div>
