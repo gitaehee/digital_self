@@ -10,9 +10,15 @@ const PaymentPage = () => {
 
   return (
     <div className="page-container">
-      <h1>결제 QR 코드 생성</h1>
-      <div className="qr">
-        <QRPayment payeeAddress={payeeAddress} tokenAddress={tokenAddress} amount={amount} />
+      <div className="card">
+        <h1>결제 QR 코드 생성</h1>
+        <div className="qr">
+          <QRPayment
+            payeeAddress={payeeAddress}
+            tokenAddress={tokenAddress}
+            amount={amount}
+          />
+        </div>
       </div>
     </div>
   );

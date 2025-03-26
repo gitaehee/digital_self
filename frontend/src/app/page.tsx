@@ -32,25 +32,29 @@ export default function Home() {
 
   return (
     <div className="page-container">
-      <h1>홈페이지</h1>
-      {!address ? (
-        <>
-          <button onClick={handleConnect} disabled={connecting}>
-            {connecting ? "지갑 연결 중..." : "지갑 연결"}
-          </button>
-          {error && <p className="warning">{error}</p>}
-        </>
-      ) : (
-        <p className="address">🪙 지갑 주소: {address}</p>
-      )}
+      <div className="card">
+        <h1>홈페이지</h1>
+        {!address ? (
+          <>
+            <button onClick={handleConnect} disabled={connecting}>
+              {connecting ? "🔄 지갑 연결 중..." : "지갑 연결"}
+            </button>
+            {error && <p className="warning">{error}</p>}
+          </>
+        ) : (
+          <p className="address">🪙 지갑 주소: {address}</p>
+        )}
+      </div>
 
-      {provider ? (
-        <div className="qr">
-          <PaymentScanner provider={provider} contractAddress={contractAddress} />
-        </div>
-      ) : (
-        <p className="warning">지갑을 연결하면 QR 스캐너가 활성화됩니다.</p>
-      )}
+      <div className="card">
+        {provider ? (
+          <div className="qr">
+            <PaymentScanner provider={provider} contractAddress={contractAddress} />
+          </div>
+        ) : (
+          <p className="warning">지갑을 연결하면 QR 스캐너가 활성화됩니다.</p>
+        )}
+      </div>
     </div>
   );
 }

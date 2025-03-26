@@ -2,68 +2,94 @@
 body {
   margin: 0;
   padding: 0;
-  background: #303030;
-  color: #f3f3f3;
+  background: #f9fafb;
+  color: #111827;
   font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
 }
 
 a {
-  color: #6c4ee3;
+  color: #6366f1;
   text-decoration: none;
   font-weight: 500;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: #4338ca;
 }
 
 .navbar {
-  background: #ffffff;
+  background: white;
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
   gap: 1.5rem;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .page-container {
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
   padding: 3rem 2rem;
-  text-align: center;
+}
+
+.card {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  margin-bottom: 2rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
 }
 
 h1 {
-  font-size: 2.2rem;
+  font-size: 1.75rem;
   font-weight: 700;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 button {
-  padding: 0.8rem 2rem;
+  padding: 0.8rem 1.8rem;
   font-size: 1rem;
-  background-color: #5c4dff;
+  background-color: #6366f1;
   border: none;
-  border-radius: 8px;
+  border-radius: 0.6rem;
   color: white;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #4f46e5;
 }
 
 button:disabled {
-  background-color: #9b96f2;
+  background-color: #a5b4fc;
   cursor: not-allowed;
 }
 
 .warning {
-  margin-top: 2rem;
-  color: #fbbf24;
+  margin-top: 1rem;
+  color: #f97316;
   font-size: 0.95rem;
 }
 
 .address {
-  margin-top: 1rem;
   font-weight: bold;
-  font-size: 1.05rem;
+  margin-top: 1rem;
+  font-size: 1rem;
 }
 
 .qr {
-  margin-top: 2rem;
+  margin-top: 1rem;
+  text-align: center;
 }

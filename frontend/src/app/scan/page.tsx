@@ -10,12 +10,16 @@ export default function ScanPage() {
 
   return (
     <div className="page-container">
-      <h1>QR 코드 스캔 및 결제</h1>
-      {provider ? (
-        <PaymentScanner provider={provider} contractAddress={contractAddress} />
-      ) : (
-        <p className="warning">⚠️ 먼저 지갑을 연결해주세요.</p>
-      )}
+      <div className="card">
+        <h1>QR 코드 스캔 및 결제</h1>
+        {provider ? (
+          <div className="qr">
+            <PaymentScanner provider={provider} contractAddress={contractAddress} />
+          </div>
+        ) : (
+          <p className="warning">⚠️ 먼저 지갑을 연결해주세요.</p>
+        )}
+      </div>
     </div>
   );
 }
