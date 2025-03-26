@@ -33,25 +33,38 @@ export default function QRPayment({ payeeAddress, tokenAddress, amount }: Props)
 
   return (
     <div style={{ textAlign: "center" }}>
-      <div ref={qrRef} style={{ display: "inline-block", padding: "1rem", background: "white" }}>
-        <QRCodeSVG value={qrData} size={200} />
-      </div>
+  <div
+    ref={qrRef}
+    style={{
+      display: "inline-block",
+      padding: "1rem",
+      background: "white",
+      borderRadius: "0.75rem",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+    }}
+  >
+    <QRCodeSVG value={qrData} size={200} />
+  </div>
 
-      <button
-        onClick={downloadQR}
-        style={{
-          marginTop: "1rem",
-          padding: "0.5rem 1.2rem",
-          fontSize: "1rem",
-          borderRadius: "0.5rem",
-          background: "#6366f1",
-          color: "white",
-          border: "none",
-          cursor: "pointer",
-        }}
-      >
-        ⬇️ QR 다운로드
-      </button>
-    </div>
+  <div style={{ marginTop: "1rem" }}>
+    <button
+      onClick={downloadQR}
+      style={{
+        padding: "0.6rem 1.5rem",
+        fontSize: "1rem",
+        borderRadius: "0.5rem",
+        background: "#6366f1",
+        color: "white",
+        border: "none",
+        cursor: "pointer",
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "0.5rem",
+      }}
+    >
+      ⬇️ QR 다운로드
+    </button>
+  </div>
+</div>
   );
 }
