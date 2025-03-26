@@ -1,3 +1,5 @@
+// frontend/src/app/scan/page.tsx
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -6,15 +8,15 @@ import { useRouter } from "next/navigation";
 export default function ScanPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [balance, setBalance] = useState<number>(2); //현재 잔액
+  const [balance, setBalance] = useState<number>(2.0); //현재 잔액
   const [amount, setAmount] = useState<number>(1.1); // QR에서 가져온 값이라고 가정
 
   useEffect(() => {
-    const stored = localStorage.getItem("mockBalance");
-    if (stored) {
-      setBalance(parseFloat(stored));
-    }
+    const initialBalance = 2.0;
+    localStorage.setItem("mockBalance", initialBalance.toString());
+    setBalance(initialBalance);
   }, []);
+  
 
   const isInsufficient = amount > balance;
 
@@ -31,9 +33,9 @@ export default function ScanPage() {
       const prev = JSON.parse(localStorage.getItem("transactions") || "[]");
       localStorage.setItem("transactions", JSON.stringify([...prev, newTx]));
 
-      // 💰 잔액 차감 후 저장
-      const newBalance = Math.max(0, balance - amount);
-      localStorage.setItem("mockBalance", newBalance.toString());
+      // 💰 잔액 차감 제거 (리셋된 2.0 유지)
+      // const newBalance = Math.max(0, balance - amount);
+      // localStorage.setItem("mockBalance", newBalance.toString());
 
       setLoading(false);
       router.push("/success");
