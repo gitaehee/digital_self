@@ -2,19 +2,17 @@
 
 import { useEffect, useState } from "react";
 
-// 트랜잭션 타입 정의
 interface Transaction {
   id: string;
   amount: number;
   to: string;
-  status: "성공" | "실패";
+  status: string;
   timestamp: string;
 }
 
 export default function HistoryPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
-  // 로컬 스토리지에서 불러오기
   useEffect(() => {
     const stored = localStorage.getItem("transactions");
     if (stored) {
@@ -25,10 +23,10 @@ export default function HistoryPage() {
   return (
     <div className="page-container">
       <div className="card">
-        <h1>결제 내역</h1>
+        <h1>📜 결제 내역</h1>
 
         {transactions.length === 0 ? (
-          <p>저장된 결제 내역이 없습니다.</p>
+          <p>결제 내역이 없습니다.</p>
         ) : (
           <ul style={{ listStyle: "none", padding: 0 }}>
             {transactions.map((tx) => (
@@ -42,10 +40,8 @@ export default function HistoryPage() {
                   background: "#f9fafb",
                 }}
               >
-                <p>
-                  💸 <strong>{tx.amount} ETH</strong>
-                </p>
-                <p>📤 받는 사람: {tx.to}</p>
+                <p>💸 <strong>{tx.amount} ETH</strong></p>
+                <p>📤 받는 주소: {tx.to}</p>
                 <p>⏱️ {new Date(tx.timestamp).toLocaleString()}</p>
                 <p
                   style={{

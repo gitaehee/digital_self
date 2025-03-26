@@ -1,24 +1,48 @@
 //frontend/src/app/scan/page.tsx
 
 "use client";
-import { useWallet } from "@/hooks/useWallet";
-import PaymentScanner from "@/components/PaymentScanner";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function ScanPage() {
-  const { provider } = useWallet();
-  const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const handleFakeApprove = () => {
+    setLoading(true);
+    setTimeout(() => {
+      const newTx = {
+        id: crypto.randomUUID(),
+        amount: 1.1,
+        to: "0x1234...ABCD",
+        status: "성공",
+        timestamp: new Date().toISOString(),
+      };
+      const prev = JSON.parse(localStorage.getItem("transactions") || "[]");
+      localStorage.setItem("transactions", JSON.stringify([...prev, newTx]));
+      setLoading(false);
+      router.push("/success");
+    }, 1500);
+  };
 
   return (
     <div className="page-container">
-      <div className="card">
-        <h1>QR 코드 스캔 및 결제</h1>
-        {provider ? (
-          <div className="qr">
-            <PaymentScanner provider={provider} contractAddress={contractAddress} />
-          </div>
-        ) : (
-          <p className="warning">⚠️ 먼저 지갑을 연결해주세요.</p>
-        )}
+      <div className="card" style={{ textAlign: "center" }}>
+        <h1>📷 QR 코드 스캔</h1>
+        <p style={{ marginBottom: "1.5rem" }}>
+          QR을 스캔한 결과, 아래 결제 정보가 확인되었습니다.
+        </p>
+        <p>💸 금액: <strong>1.1 ETH</strong></p>
+        <p>📤 받는 주소: 0x1234...ABCD</p>
+
+        <button
+          onClick={handleFakeApprove}
+          disabled={loading}
+          style={{ marginTop: "2rem" }}
+        >
+          {loading ? "⏳ 결제 승인 중..." : "✅ 결제 승인"}
+        </button>
       </div>
     </div>
   );

@@ -1,18 +1,20 @@
-//frontend/src/app/payment/page.tsx
-
 "use client";
+
 import QRPayment from "@/components/QRPayment";
 
-const PaymentPage = () => {
-  const payeeAddress = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"; // 가짜 주소
-  const tokenAddress = "0xFAKEFAKEFAKEFAKEFAKEFAKEFAKEFAKEFAKEFAKE"; // 가짜 토큰 주소
-  const amount = 100; // 결제 금액 예시
+export default function PaymentPage() {
+  const payeeAddress = "0x1234...ABCD"; // 가짜 판매자 주소
+  const tokenAddress = "0xDEAD...BEEF"; // 가짜 토큰 주소
+  const amount = 1.1; // 고정 금액
 
   return (
     <div className="page-container">
-      <div className="card">
-        <h1>결제 QR 코드 생성</h1>
-        <div className="qr">
+      <div className="card" style={{ textAlign: "center" }}>
+        <h1>📦 결제 요청 QR 생성</h1>
+        <p style={{ marginBottom: "1.5rem" }}>
+          아래 QR 코드를 구매자에게 보여주세요.
+        </p>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <QRPayment
             payeeAddress={payeeAddress}
             tokenAddress={tokenAddress}
@@ -22,19 +24,4 @@ const PaymentPage = () => {
       </div>
     </div>
   );
-};
-
-export default PaymentPage;
-
-const styles = {
-  container: {
-    padding: "2rem",
-    maxWidth: "600px",
-    margin: "0 auto",
-    fontFamily: "sans-serif",
-  },
-  title: {
-    fontSize: "2rem",
-    marginBottom: "1.5rem",
-  },
-};
+}
