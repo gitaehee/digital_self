@@ -52,7 +52,9 @@ export default function Home() {
       setTransactions(parsed.slice(-3).reverse());
       const spent = parsed.reduce((sum, tx) => sum + tx.amount, 0);
       setBalance(Math.max(0, MOCK_INITIAL_BALANCE - spent));
+      localStorage.setItem("mockBalance", (MOCK_INITIAL_BALANCE - spent).toString());
     }
+    
   }, []);
 
   const handleConnect = async () => {
