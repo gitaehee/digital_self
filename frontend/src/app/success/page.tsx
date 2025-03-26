@@ -5,18 +5,18 @@ import Link from "next/link";
 export default function SuccessPage() {
   return (
     <div className="page-container">
-      <div className="card">
-        <h1>✅ 결제가 완료되었습니다!</h1>
-        <p style={{ marginTop: "1rem", fontSize: "1rem" }}>
-          거래 내역은 히스토리에서 확인할 수 있어요.
+      <div className="card" style={{ textAlign: "center" }}>
+        <h1 style={{ fontSize: "2rem", color: "#10b981" }}>🎉 결제 완료!</h1>
+        <p style={{ marginTop: "1rem", fontSize: "1.1rem" }}>
+          트랜잭션이 성공적으로 처리되었습니다.
         </p>
 
-        <div style={{ marginTop: "2rem", display: "flex", gap: "1rem", justifyContent: "center" }}>
+        <div style={{ marginTop: "2.5rem", display: "flex", justifyContent: "center", gap: "1rem" }}>
           <Link href="/">
-            <button>홈으로</button>
+            <button>🏠 홈으로</button>
           </Link>
           <Link href="/history">
-            <button>내역 보기</button>
+            <button>📜 내역 보기</button>
           </Link>
         </div>
       </div>

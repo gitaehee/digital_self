@@ -6,7 +6,7 @@ import { ethers } from 'ethers';
 
 export const useWallet = () => {
   const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState<string | null>(null);
 
   const connectWallet = async () => {
     const web3Modal = new Web3Modal();

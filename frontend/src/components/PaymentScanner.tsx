@@ -27,23 +27,27 @@ const PaymentScanner = ({ provider, contractAddress }: PaymentScannerProps) => {
     }
   };
 
+  const [loading, setLoading] = useState(false);
+
   const handleApprove = async () => {
-    // 실제 결제 로직 (혹은 mock 결제 처리)
-    // ✅ 이곳에 localStorage 저장 + 이동 로직 들어감
+    setLoading(true);
 
-    // 예시: 스캔된 데이터를 기반으로 저장
-    const newTx = {
-      id: crypto.randomUUID(),
-      amount: 1.23, // QR로 받은 값
-      to: "0xAbC123...",
-      status: "성공",
-      timestamp: new Date().toISOString(),
-    };
+    // 모의 지연 시간
+    setTimeout(() => {
+      const newTx = {
+        id: crypto.randomUUID(),
+        amount: paymentInfo.amount,
+        to: paymentInfo.payeeAddress,
+        status: "성공",
+        timestamp: new Date().toISOString(),
+      };
 
-    const prev = JSON.parse(localStorage.getItem("transactions") || "[]");
-    localStorage.setItem("transactions", JSON.stringify([...prev, newTx]));
+      const prev = JSON.parse(localStorage.getItem("transactions") || "[]");
+      localStorage.setItem("transactions", JSON.stringify([...prev, newTx]));
 
-    router.push("/success");
+      setLoading(false);
+      router.push("/success");
+    }, 2000); // 2초 딜레이
   };
 
   const handlePayment = async () => {
@@ -101,8 +105,8 @@ const PaymentScanner = ({ provider, contractAddress }: PaymentScannerProps) => {
             <li><strong>토큰 주소:</strong> {paymentInfo.tokenAddress}</li>
             <li><strong>금액:</strong> {paymentInfo.amount}</li>
           </ul>
-          <button onClick={handlePayment} disabled={isLoading}>
-            {isLoading ? "처리 중..." : "결제하기"}
+          <button onClick={handleApprove} disabled={loading}>
+            {loading ? "⏳ 결제 승인 중..." : "✅ 결제 승인"}
           </button>
         </div>
       )}
