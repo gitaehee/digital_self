@@ -1,7 +1,7 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { useWallet } from "@/hooks/useWallet";
-import PaymentScanner from "@/components/PaymentScanner";
 import Link from "next/link";
 
 interface Transaction {
@@ -12,24 +12,46 @@ interface Transaction {
   timestamp: string;
 }
 
-const contractAddress = "0xDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF"; // 실제 또는 더미 주소
+const MOCK_INITIAL_BALANCE = 3.2;
+const MOCK_MODE = true;
 
 export default function Home() {
-  const { connectWallet, provider, address } = useWallet();
+  const { connectWallet, address } = useWallet();
   const [connecting, setConnecting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [balance, setBalance] = useState<number>(0.53); // 초기 mock 잔액
+  const [balance, setBalance] = useState<number>(MOCK_INITIAL_BALANCE);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
-  // 트랜잭션 불러오기
+  // 🔥 거래 내역 초기 생성 + 잔액 계산
   useEffect(() => {
+    const existing = localStorage.getItem("transactions");
+
+    if (MOCK_MODE && !existing) {
+      const mockTxs: Transaction[] = [
+        {
+          id: "mock1",
+          amount: 1.25,
+          to: "0xABCD123",
+          status: "성공",
+          timestamp: new Date(Date.now() - 3600000).toISOString(),
+        },
+        {
+          id: "mock2",
+          amount: 0.8,
+          to: "0xDEAD456",
+          status: "성공",
+          timestamp: new Date(Date.now() - 7200000).toISOString(),
+        },
+      ];
+      localStorage.setItem("transactions", JSON.stringify(mockTxs));
+    }
+
     const stored = localStorage.getItem("transactions");
     if (stored) {
       const parsed = JSON.parse(stored) as Transaction[];
-      setTransactions(parsed.slice(-3).reverse()); // 최신 3개
-      // 🔻 총 결제 금액만큼 mock 잔액 차감
+      setTransactions(parsed.slice(-3).reverse());
       const spent = parsed.reduce((sum, tx) => sum + tx.amount, 0);
-      setBalance(Math.max(0, 0.53 - spent));
+      setBalance(Math.max(0, MOCK_INITIAL_BALANCE - spent));
     }
   }, []);
 
@@ -40,21 +62,17 @@ export default function Home() {
       await connectWallet();
     } catch (err: any) {
       const message = err?.message || err?.toString();
-  
       if (message === "Modal closed by user") {
         setError("지갑 연결을 취소하셨습니다.");
-        // console.log("사용자가 창을 닫았어요."); // 원하면 로그 유지 가능
       } else {
         setError("지갑 연결 중 오류가 발생했습니다.");
-        console.error("예상치 못한 지갑 연결 오류:", err);
       }
     } finally {
-      setConnecting(false); // 항상 false로 초기화
+      setConnecting(false);
     }
   };
-  
 
-  const isConnected = Boolean(address && address !== "undefined" && address !== "");
+  const isConnected = Boolean(address);
 
   return (
     <div className="page-container">
@@ -90,9 +108,7 @@ export default function Home() {
           <ul style={{ listStyle: "none", padding: 0 }}>
             {transactions.map((tx) => (
               <li key={tx.id} style={styles.txItem}>
-                <p>
-                  💸 <strong>{tx.amount} ETH</strong>
-                </p>
+                <p>💸 <strong>{tx.amount} ETH</strong></p>
                 <p>📤 받는 주소: {tx.to}</p>
                 <p style={{ fontSize: "0.9rem", color: "#6b7280" }}>
                   {new Date(tx.timestamp).toLocaleString()}
