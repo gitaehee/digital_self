@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  background: #303030;
+  color: white;
+}
+.title {
+  text-align: center;
+  margin-top: 150px;
+}
+.title-sub {
+  text-align: center;
+}
+
+.navbar {
+  background: white;
+  padding: 20px;
+}
+
+.navbar a {
+  margin-right: 10px;
+  text-decoration: none;
+}
